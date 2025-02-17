@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('git clone') {
+            steps {
+                sh '''
+                    cd /var/lib/jenkins/workspace/app
+                    rm -rf *
+                '''
+                git branch: 'main', credentialsId: 'GitHub', url: 'https://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@github.com/SFZ007/hello-kubernetes.git'
+            }
+        }
+        stage('build image') {
+            steps {
+                sh '''
+                    cd /var/lib/jenkins/workspace/app
+                    docker build -t fastapi-service .
+                '''
+            }
+        }
+        stage('push to aws ecr') {
+            steps {
+                sh '''
+                    aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 444180978984.dkr.ecr.ap-south-1.amazonaws.com
+                    docker tag fastapi-service 444180978984.dkr.ecr.ap-south-1.amazonaws.com/demo:$commit_id
+                    docker push 444180978984.dkr.ecr.ap-south-1.amazonaws.com/demo:$commit_id
+                '''
+            }
+        }
+    }
+}
