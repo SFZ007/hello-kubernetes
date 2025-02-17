@@ -14,8 +14,8 @@ pipeline {
         stage('build image') {
             steps {
                 sh '''
-                    cd /var/lib/jenkins/workspace/app
-                    docker build -t fastapi-service-1 .
+                    cd /var/lib/jenkins/workspace/app/fastapi-service
+                    docker build -t fastapi-service .
                 '''
             }
         }
