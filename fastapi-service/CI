@@ -23,7 +23,7 @@ pipeline {
             steps {
                 sh '''
                     aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 444180978984.dkr.ecr.ap-south-1.amazonaws.com
-                    docker tag fastapi-service 444180978984.dkr.ecr.ap-south-1.amazonaws.com/demo:$commit_id
+                    docker tag fastapi-service:latest 444180978984.dkr.ecr.ap-south-1.amazonaws.com/demo:$commit_id
                     docker push 444180978984.dkr.ecr.ap-south-1.amazonaws.com/demo:$commit_id
                 '''
             }
