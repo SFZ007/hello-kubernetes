@@ -15,7 +15,7 @@ pipeline {
             steps {
                 sh '''
                     cd /var/lib/jenkins/workspace/app
-                    docker build -t fastapi-service .
+                    docker build -t fastapi-service-1 .
                 '''
             }
         }
